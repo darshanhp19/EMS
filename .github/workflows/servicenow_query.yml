@@ -1,0 +1,15 @@
+name: ServiceNow Incident Query
+on: 
+  workflow_dispatch: # Allows you to run it manually
+  push:
+    branches: [ "main" ] # Runs automatically when you push to main
+
+jobs:
+  query-incidents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Active Incidents
+        run: |
+          curl -L -X GET "https://https://dev221120.service-now.com//api/now/table/incident?sysparm_limit=5" \
+          -H "Accept: application/json" \
+          -H "x-sn-apikey: ${{ secrets.SNOW_API_KEY }}"
